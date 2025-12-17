@@ -3,22 +3,22 @@ import { UserSegment } from '../types';
 
 interface CTAButtonProps {
   mode: UserSegment;
-  size?: 'small' | 'large';
+  size?: 'small'| 'medium' | 'large';
   className?: string;
+  customText?: string;
 }
 
-const CTAButton: React.FC<CTAButtonProps> = ({ mode, size = 'small', className = '' }) => {
+const CTAButton: React.FC<CTAButtonProps> = ({ mode, size = 'small', className = '', customText }) => {
   const isEnterprise = mode === UserSegment.ENTERPRISE;
   
-  const buttonText = isEnterprise ? 'Sign Up' : 'Download';
-  
+  const buttonText = customText || (isEnterprise ? 'Sign Up' : 'Download');
   const buttonColorClass = isEnterprise 
     ? 'bg-brand-primary hover:bg-brand-primary/90' 
     : 'bg-brand-secondary hover:bg-brand-secondary/90';
   
   const sizeClasses = size === 'large' 
   ? 'text-lg font-semibold px-8 py-4 shadow-xl hover:shadow-2xl hover:scale-105'
-  : 'text-sm font-semibold px-6 py-2.5 shadow-lg hover:scale-105';
+  : size === 'medium' ? 'text-base font-semibold px-6 py-3 shadow-lg hover:scale-105' : 'text-sm font-semibold px-6 py-2.5 shadow-lg hover:scale-105';
   
   return (
     <button 

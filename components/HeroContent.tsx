@@ -50,7 +50,12 @@ const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
 
         {/* CTA Area */}
         <div className="flex flex-col items-center gap-6 w-full sm:w-auto">
-          <CTAButton mode={mode} size="large" className="w-full sm:w-auto" />
+          <CTAButton 
+  mode={mode} 
+  size="medium" 
+  className="w-full sm:w-auto" 
+  customText={isEnterprise ? "Get Started" : "Download Now"}
+/>
 
           {/* Trust Badges */}
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-sm text-text-muted font-medium mt-2">
@@ -62,7 +67,6 @@ const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );
