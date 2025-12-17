@@ -44,7 +44,7 @@ const SpotlightCard = ({ children, className = "", spotlightColor, borderColor }
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setOpacity(1)}
+      onMouseEnter={() => setOpacity(0.4)}
       onMouseLeave={() => setOpacity(0)}
       className={`relative overflow-hidden rounded-[32px] border border-gray-200 bg-white shadow-sm transition-all duration-300 ${className}`}
     >
