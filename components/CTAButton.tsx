@@ -1,0 +1,32 @@
+import React from 'react';
+import { UserSegment } from '../types';
+
+interface CTAButtonProps {
+  mode: UserSegment;
+  size?: 'small' | 'large';
+  className?: string;
+}
+
+const CTAButton: React.FC<CTAButtonProps> = ({ mode, size = 'small', className = '' }) => {
+  const isEnterprise = mode === UserSegment.ENTERPRISE;
+  
+  const buttonText = isEnterprise ? 'Sign Up' : 'Download';
+  
+  const buttonColorClass = isEnterprise 
+    ? 'bg-brand-primary hover:bg-brand-primary/90' 
+    : 'bg-brand-secondary hover:bg-brand-secondary/90';
+  
+  const sizeClasses = size === 'large' 
+  ? 'text-lg font-semibold px-8 py-4 shadow-xl hover:shadow-2xl hover:scale-105'
+  : 'text-sm font-semibold px-6 py-2.5 shadow-lg hover:scale-105';
+  
+  return (
+    <button 
+      className={`${buttonColorClass} text-white rounded-full shadow-gray-200 transition-all transform active:translate-y-0 active:scale-95 ${sizeClasses} ${className}`}
+    >
+      {buttonText}
+    </button>
+  );
+};
+
+export default CTAButton;
