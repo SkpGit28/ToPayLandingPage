@@ -50,8 +50,8 @@ const Home: React.FC = () => {
 
       {/* Main Page Content - Below Fold */}
       <main className="relative z-20 bg-white/50 backdrop-blur-3xl">
+      <Metrics mode="enterprise" />
         <BentoGrid mode={mode} />
-        <Metrics mode="enterprise" />
         <Testimonials />
         <HelpSection mode={mode} />
         <PreFooter mode={mode} />

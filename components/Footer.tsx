@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
     <footer className="bg-white border-t border-gray-100 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          
+
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center gap-2 mb-6">
@@ -46,9 +46,9 @@ const Footer: React.FC = () => {
           <div className="col-span-1">
             <h4 className="font-bold text-text-main mb-4">Legal</h4>
             <ul className="space-y-3 text-sm text-text-muted">
-              <li><a href="#" className="hover:text-text-main">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-text-main">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-text-main">Cookie Policy</a></li>
+              <li><a href="/privacy-policy" className="hover:text-text-main">Privacy Policy</a></li>
+              <li><a href="/terms-of-service" className="hover:text-text-main">Terms of Service</a></li>
+              <li><a href="/cookie-policy" className="hover:text-text-main">Cookie Policy</a></li>
             </ul>
           </div>
         </div>

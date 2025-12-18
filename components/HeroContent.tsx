@@ -24,7 +24,7 @@ const WaterflowText: React.FC<{ words: string[]; className?: string }> = ({ word
   const characters = word.split('');
 
   return (
-    <span className={`inline-flex relative overflow-hidden px-1 pb-1 ${className}`}>
+    <span className={`inline-flex relative overflow-hidden px-4 pb-2 ${className}`}>
       <AnimatePresence mode="wait">
         <motion.span
           key={index}
@@ -102,7 +102,7 @@ const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-display font-bold text-4xl sm:text-5xl lg:text-7xl text-text-main leading-[1.1] tracking-tight max-w-[60rem] mb-6 sm:mb-8 transition-opacity duration-500"
+          className="font-display font-extrabold text-4xl sm:text-5xl lg:text-7xl text-text-main leading-[1.1] tracking-tight max-w-[60rem] mb-6 sm:mb-8 transition-opacity duration-500"
         >
           {isEnterprise ? (
             <>
