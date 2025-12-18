@@ -1,11 +1,74 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { UserSegment } from '../types';
 import { CheckCircle } from './Icons';
 import CTAButton from './CTAButton';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeroContentProps {
   mode: UserSegment;
 }
+
+// Animated Waterflow Text Component
+const WaterflowText: React.FC<{ words: string[]; className?: string }> = ({ words, className = '' }) => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, 3000); // Change word every 3 seconds for better readability
+
+    return () => clearInterval(interval);
+  }, [words.length]);
+
+  const word = words[index];
+  const characters = word.split('');
+
+  return (
+    <span className={`inline-flex relative overflow-hidden px-1 pb-1 ${className}`}>
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={index}
+          className="inline-flex"
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={{
+            visible: { transition: { staggerChildren: 0.05 } },
+            exit: { transition: { staggerChildren: 0.02, staggerDirection: 1 } }
+          }}
+        >
+          {characters.map((char, i) => (
+            <motion.span
+              key={i}
+              className="inline-block"
+              variants={{
+                hidden: { y: '100%', opacity: 0, filter: 'blur(8px)' },
+                visible: {
+                  y: 0,
+                  opacity: 1,
+                  filter: 'blur(0px)',
+                  transition: {
+                    type: "spring",
+                    damping: 20,
+                    stiffness: 100
+                  }
+                },
+                exit: {
+                  y: '-100%',
+                  opacity: 0,
+                  filter: 'blur(8px)',
+                  transition: { duration: 0.3, ease: "easeIn" }
+                }
+              }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </motion.span>
+          ))}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+};
 
 const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
   const isEnterprise = mode === UserSegment.ENTERPRISE;
@@ -13,13 +76,13 @@ const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
   // Content configuration
   const content = {
     [UserSegment.ENTERPRISE]: {
-      heading: "One Platform. Every Payment Experience.",
+      heading: "One Platform for Everything Payments.",
       body: "Streamline your global transactions with enterprise-grade security, automated compliance, and real-time reconciliation across all borders.",
       buttonColor: "bg-brand-primary hover:bg-brand-primary/90",
       badges: ["No credit card required", "14-day free trial"]
     },
     [UserSegment.CONSUMER]: {
-      heading: "One App for Total Control.",
+      heading: <p>One App, Total Control. <br /> Pay Bills</p>,
       body: "Manage your personal finances, split bills with friends instantly, and track your daily spending habits effortlessly from your pocket.",
       buttonColor: "bg-brand-secondary hover:bg-brand-secondary/90",
       badges: ["Free forever plan", "No hidden fees"]
@@ -35,38 +98,81 @@ const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
       <div className="flex flex-col items-center transition-all duration-700 ease-out">
 
         {/* Main Heading */}
-        <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-7xl text-text-main leading-[1.1] tracking-tight max-w-[60rem] mb-6 sm:mb-8 transition-opacity duration-500">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="font-display font-bold text-4xl sm:text-5xl lg:text-7xl text-text-main leading-[1.1] tracking-tight max-w-[60rem] mb-6 sm:mb-8 transition-opacity duration-500"
+        >
           {isEnterprise ? (
-            <>One Platform. <br /> Every Payment Experience.</>
+            <>
+              One Platform for <br /> Everything{' '}
+              <WaterflowText
+                words={['Payments', 'Taxation', 'HRM', 'Compliance']}
+                className="italic text-brand-primary"
+              />
+            </>
           ) : (
-            currentContent.heading
+            <>
+              One App, Total Control. <br /> Pay{' '}
+              <WaterflowText
+                words={['Bills', 'Recharges', 'Hotels', 'Food']}
+                className="italic text-brand-secondary"
+              />
+            </>
           )}
-        </h1>
+        </motion.h1>
 
         {/* Body Text */}
-        <p className="font-sans text-lg sm:text-xl text-text-muted max-w-2xl mb-10 leading-relaxed transition-opacity duration-500 delay-75">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="font-sans text-lg sm:text-xl text-text-muted max-w-2xl mb-10 leading-relaxed transition-opacity duration-500 delay-75"
+        >
           {currentContent.body}
-        </p>
+        </motion.p>
 
         {/* CTA Area */}
-        <div className="flex flex-col items-center gap-6 w-full sm:w-auto">
-          <CTAButton 
-  mode={mode} 
-  size="medium" 
-  className="w-full sm:w-auto" 
-  customText={isEnterprise ? "Get Started" : "Download Now"}
-/>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="flex flex-col items-center gap-6 w-full sm:w-auto"
+        >
+          <CTAButton
+            mode={mode}
+            size="medium"
+            className="w-full sm:w-auto"
+            customText={isEnterprise ? "Get Started" : "Download Now"}
+          />
 
           {/* Trust Badges */}
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-sm text-text-muted font-medium mt-2">
-            {currentContent.badges.map((badge, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <CheckCircle className={`w-5 h-5 ${isEnterprise ? 'text-brand-primary' : 'text-brand-secondary'}`} />
-                <span>{badge}</span>
+            {isEnterprise ? (
+              // Enterprise badges
+              currentContent.badges.map((badge, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-brand-primary" />
+                  <span>{badge}</span>
+                </div>
+              ))
+            ) : (
+              // Consumer: Play Store rating instead
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 rounded-full bg-white shadow-sm flex items-center justify-center">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 20.5V3.5C3 2.91 3.34 2.39 3.84 2.15L13.69 12L3.84 21.85C3.34 21.6 3 21.09 3 20.5Z" fill="#00D9FF" />
+                    <path d="M16.81 15.12L6.05 21.34L14.54 12.85L16.81 15.12Z" fill="#FFCE00" />
+                    <path d="M20.16 10.81C20.5 11.08 20.75 11.53 20.75 12C20.75 12.47 20.5 12.92 20.16 13.19L17.89 14.5L15.39 12L17.89 9.5L20.16 10.81Z" fill="#FF3E00" />
+                    <path d="M6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z" fill="#00F076" />
+                  </svg>
+                </div>
+                <span className="text-text-main">Rated 4.4 ★ on Google Play</span>
               </div>
-            ))}
+            )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

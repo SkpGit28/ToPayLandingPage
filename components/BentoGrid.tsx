@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 
 // --- MOCKS ---
-// Adjusted to match your SegmentedControl usage (CONSUMER instead of PERSONAL)
 const UserSegment = {
   ENTERPRISE: 'ENTERPRISE',
   CONSUMER: 'CONSUMER'
@@ -29,10 +28,11 @@ const UserSegment = {
 // --- COMPONENTS ---
 
 // 1. Spotlight Card Component
-const SpotlightCard = ({ children, className = "", spotlightColor, borderColor }) => {
+const SpotlightCard = ({ children, className = "", spotlightColor, borderColor, isEnterprise = true }) => {
   const divRef = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e) => {
     if (!divRef.current) return;
@@ -44,9 +44,9 @@ const SpotlightCard = ({ children, className = "", spotlightColor, borderColor }
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setOpacity(0.4)}
-      onMouseLeave={() => setOpacity(0)}
-      className={`relative overflow-hidden rounded-[32px] border border-gray-200 bg-white shadow-sm transition-all duration-300 ${className}`}
+      onMouseEnter={() => { setOpacity(0.4); setIsHovered(true); }}
+      onMouseLeave={() => { setOpacity(0); setIsHovered(false); }}
+      className={`relative overflow-hidden rounded-[32px] border ${isHovered ? (isEnterprise ? 'border-red-500/30' : 'border-blue-500/30') : 'border-gray-200'} bg-[#fafafa] shadow-sm transition-all duration-300 ${className}`}
     >
       {/* Spotlight Gradient */}
       <div
@@ -84,14 +84,14 @@ const Pill = ({ icon: Icon, text, className }) => (
 );
 
 const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
-  // Logic updated: Controlled directly by prop, internal state removed
   const isEnterprise = mode === UserSegment.ENTERPRISE;
 
   // --- Theme Configuration ---
   const theme = {
     primary: isEnterprise ? 'bg-red-600' : 'bg-blue-600',
     textPrimary: isEnterprise ? 'text-red-600' : 'text-blue-600',
-    bgLight: isEnterprise ? 'bg-red-50' : 'bg-blue-50',
+    borderPrimary: isEnterprise ? 'border-red-600' : 'border-blue-600',
+    bgLight: isEnterprise ? 'bg-red-50' : 'bg-white',
     gradient: isEnterprise ? 'from-red-600 to-rose-400' : 'from-blue-600 to-cyan-400',
     spotlight: isEnterprise ? 'rgba(220, 38, 38, 0.15)' : 'rgba(37, 99, 235, 0.15)',
     borderColor: isEnterprise ? 'rgba(220, 38, 38, 0.3)' : 'rgba(37, 99, 235, 0.3)',
@@ -114,7 +114,7 @@ const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
             className="bg-white border-gray-200 text-gray-500 mx-auto mb-6 shadow-sm"
           />
           <motion.h2
-            key={mode} // Animation key triggers on prop change
+            key={mode}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -143,10 +143,10 @@ const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
             <SpotlightCard
               spotlightColor={theme.spotlight}
               borderColor={theme.borderColor}
+              isEnterprise={isEnterprise}
               className="h-full p-8 flex flex-col justify-between"
             >
-
-              <div className={`absolute top-0 right-0 w-96 h-96 bg-gradient-to-br rounded-full blur-[100px] opacity-[0.08] -mr-20 -mt-20 pointer-events-none ${theme.gradient}`}></div>
+              <div className={`absolute top-0 right-0 w-96 h-96  rounded-full blur-[100px] opacity-[0.08] -mr-20 -mt-20 pointer-events-none ${theme.gradient}`}></div>
 
               <div className="relative z-10 flex flex-col h-full">
                 <div className="mb-6">
@@ -181,7 +181,7 @@ const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
                           key={i}
                           initial={{ height: "10%" }}
                           whileInView={{ height: `${h}%` }}
-                          transition={{ duration: 0.8, delay: i * i * 0.1, type: "spring", stiffness: 100 }}
+                          transition={{ duration: 0.8, delay: i * 0.1, type: "spring", stiffness: 100 }}
                           viewport={{ once: true }}
                           className={`flex-1 rounded-t-sm opacity-80 ${theme.primary}`}
                         />
@@ -198,6 +198,7 @@ const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
             <SpotlightCard
               spotlightColor={theme.spotlight}
               borderColor={theme.borderColor}
+              isEnterprise={isEnterprise}
               className="h-full p-6 flex flex-col"
             >
               <div className="z-10 flex flex-col h-full">
@@ -227,7 +228,7 @@ const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
                       <motion.div
                         key={idx}
                         whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 1)" }}
-                        className="bg-gray-50/50 border cursor-pointer border-gray-100 p-2 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transirs cursor-default"
+                        className="bg-white border border-gray-100 p-2 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition-colors cursor-pointer"
                       >
                         <item.i className={`w-4 h-4 opacity-80 ${theme.textPrimary}`} />
                         <span className="text-[9px] font-bold text-gray-500 uppercase">{item.l}</span>
@@ -249,6 +250,7 @@ const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
             <SpotlightCard
               spotlightColor={theme.spotlight}
               borderColor={theme.borderColor}
+              isEnterprise={isEnterprise}
               className="h-full p-6 flex flex-col"
             >
               <div className="z-10 flex flex-col h-full">
@@ -299,6 +301,7 @@ const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
             <SpotlightCard
               spotlightColor={theme.spotlight}
               borderColor={theme.borderColor}
+              isEnterprise={isEnterprise}
               className="h-full p-8 flex flex-col sm:flex-row items-center gap-8"
             >
               <div className="flex-1">
@@ -334,7 +337,7 @@ const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 + (idx * 0.1) }}
                     whileHover={{ y: -5 }}
-                    className="flex-1 bg-gray-50/50 border border-gray-100 p-3 rounded-2xl flex flex-col items-center justify-center gap-2 shadow-sm cursor-pointer"
+                    className="flex-1 bg-white border border-gray-100 p-3 rounded-2xl flex flex-col items-center justify-center gap-2 shadow-sm cursor-pointer"
                   >
                     <item.i className={`w-4 h-4 ${theme.textPrimary}`} />
                     <span className="text-[10px] font-bold text-gray-500 uppercase">{item.t}</span>

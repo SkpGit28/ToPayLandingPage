@@ -1,0 +1,64 @@
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView, useSpring, useMotionValue, useTransform } from 'framer-motion';
+
+// Helper Component for the animation
+const Counter = ({ value, suffix = "", label, isEnterpriseMode }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  
+  const motionValue = useMotionValue(0);
+  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
+  const displayValue = useTransform(springValue, (latest) => 
+    `${Math.floor(latest).toLocaleString()}${suffix}`
+  );
+
+  useEffect(() => {
+    if (isInView) {
+      motionValue.set(value);
+    }
+  }, [isInView, value, motionValue]);
+
+  return (
+    <div ref={ref} className="text-center space-y-2">
+      <motion.div 
+        className={`text-4xl md:text-5xl font-bold tracking-tight ${
+          isEnterpriseMode ? "text-red-600" : "text-blue-600"
+        }`}
+      >
+        {displayValue}
+      </motion.div>
+      <div className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+        {label}
+      </div>
+    </div>
+  );
+};
+
+export const Metrics = ({ mode = 'enterprise' }) => {
+  const isEnterprise = mode === 'enterprise';
+
+  return (
+    <section className="py-20 bg-gray-50 border-y border-gray-200">
+      <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
+        <Counter 
+          value={1.2} 
+          suffix=" Cr+" 
+          label="Transactions Processed" 
+          isEnterpriseMode={isEnterprise} 
+        />
+        <Counter 
+          value={80} 
+          suffix=" Lakhs" 
+          label="Successful Settlements" 
+          isEnterpriseMode={isEnterprise} 
+        />
+        <Counter 
+          value={99.9} 
+          suffix="%" 
+          label="System Uptime" 
+          isEnterpriseMode={isEnterprise} 
+        />
+      </div>
+    </section>
+  );
+};
