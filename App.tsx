@@ -7,6 +7,8 @@ import PrivacyPolicy from './routes/PrivacyPolicy';
 import TermsOfService from './routes/TermsOfService';
 import CookiePolicy from './routes/CookiePolicy';
 
+import NotFound from './routes/NotFound';
+
 import { UserSegment } from './types';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -21,6 +23,7 @@ function App() {
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-of-service" element={<TermsOfService />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
     );

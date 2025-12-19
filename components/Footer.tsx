@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { LogoIcon, TwitterLogo, LinkedinLogo } from './Icons';
 
 const Footer: React.FC = () => {
@@ -9,9 +10,14 @@ const Footer: React.FC = () => {
 
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <LogoIcon className="text-text-main" />
-              <span className="font-display font-bold text-xl text-text-main">ToPay</span>
+            <div className="flex items-center gap-2">
+              <Link to="/" className="flex items-center gap-2 cursor-pointer group relative z-50">
+                            <img
+                              src="/assets/ToPayLogo.png"
+                              alt="ToPay Logo"
+                              className="w-16 h-16 object-contain"
+                            />
+                          </Link>
             </div>
             <p className="text-text-muted text-sm mb-6">
               Reimagining financial infrastructure for the modern world. Secure, fast, and reliable.
@@ -46,9 +52,9 @@ const Footer: React.FC = () => {
           <div className="col-span-1">
             <h4 className="font-bold text-text-main mb-4">Legal</h4>
             <ul className="space-y-3 text-sm text-text-muted">
-              <li><a href="/privacy-policy" className="hover:text-text-main">Privacy Policy</a></li>
-              <li><a href="/terms-of-service" className="hover:text-text-main">Terms of Service</a></li>
-              <li><a href="/cookie-policy" className="hover:text-text-main">Cookie Policy</a></li>
+              <li><Link to="/privacy-policy" className="hover:text-text-main">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-service" className="hover:text-text-main">Terms of Service</Link></li>
+              <li><Link to="/cookie-policy" className="hover:text-text-main">Cookie Policy</Link></li>
             </ul>
           </div>
         </div>

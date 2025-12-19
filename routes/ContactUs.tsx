@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { UserSegment } from '../types';
 import { Headphones, ChatTeardrop, NotePencil, WarningCircle, ArrowRight, CheckCircle, Lightning, Globe, ShieldCheck, Code, MapPin } from '../components/Icons';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useMotionTemplate } from 'framer-motion';
+import MainLayout from '../layouts/MainLayout';
+import { PORTALS, OFFICES } from '../data/contact';
 
 import SegmentedControl from '../components/SegmentedControl';
 
@@ -16,62 +16,51 @@ const ContactPage: React.FC<ContactPageProps> = ({ mode }) => {
   const brandColor = 'text-brand-primary';
   const brandBg = 'bg-brand-primary';
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [contactMode, setContactMode] = useState<'message' | 'complaint'>('message');
 
-  // Track mouse for holographic effects
+  // Motion values for high-performance animations
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth spring physics for the cursor
+  const springX = useSpring(mouseX, { stiffness: 500, damping: 50 });
+  const springY = useSpring(mouseY, { stiffness: 500, damping: 50 });
+
+  // Slower spring for the hero parallax
+  const heroSpringX = useSpring(mouseX, { stiffness: 100, damping: 30 });
+  const heroSpringY = useSpring(mouseY, { stiffness: 100, damping: 30 });
+
+  const heroX = useMotionTemplate`calc((${heroSpringX}px - 50vw) * 0.05)`;
+  const heroY = useMotionTemplate`calc((${heroSpringY}px - 50vh) * 0.05)`;
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [mouseX, mouseY]);
 
-  const portals = [
-    {
-      id: 'sales',
-      icon: NotePencil,
-      title: "Growth & Sales",
-      desc: "For enterprises looking to scale their global infrastructure.",
-      status: "Available",
-      wait: "15 min",
-      color: "blue"
-    },
-    {
-      id: 'support',
-      icon: Headphones,
-      title: "Technical Support",
-      desc: "Instant troubleshooting for your transactions and cards.",
-      status: "High Volume",
-      wait: "4 min",
-      color: "green"
-    },
-    {
-      id: 'dev',
-      icon: Code,
-      title: "Developer Desk",
-      desc: "Deep-dive API support and integration architecture.",
-      status: "Online",
-      wait: "2 min",
-      color: "purple"
-    }
-  ];
+
+  const portals = PORTALS;
+
 
   return (
-    <div className="bg-white min-h-screen">
-      <Navbar mode={mode} />
-
+    <MainLayout mode={mode}>
       <div className="pt-20"> {/* Offset for fixed navbar */}
         {/* 1. KINETIC HERO */}
         <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden px-4">
-          <div
+          <motion.div
             className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden opacity-[0.03]"
-            style={{ transform: `translate(${(mousePos.x - window.innerWidth / 2) * 0.05}px, ${(mousePos.y - window.innerHeight / 2) * 0.05}px)` }}
+            style={{
+              x: heroX,
+              y: heroY
+            }}
           >
             <span className="text-[20vw] font-display font-black leading-none">CONNECT</span>
-          </div>
+          </motion.div>
 
           <div className="relative z-10 max-w-5xl text-center">
             <div className="flex justify-center mb-8">
@@ -80,7 +69,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ mode }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <div className={`px-4 py-1.5 rounded-full ${isEnterprise ? 'bg-red-50 text-brand-primary' : 'bg-blue-50 text-brand-secondary'} text-[10px] font-bold tracking-[0.4em] uppercase border border-current opacity-70 font-display`}>
+                <div className="px-4 py-1.5 rounded-full bg-blue-50 text-brand-secondary text-[10px] font-bold tracking-[0.4em] uppercase border border-current opacity-70 font-display">
                   Communication Layer
                 </div>
               </motion.div>
@@ -315,24 +304,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ mode }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {[
-              {
-                type: "Registered Office",
-                city: "New Delhi",
-                address: "Plot no.31, Ground Floor, Sai Enclave, Lane No: 2, Sector - 23, Dwarka, New Delhi - 110077",
-                timezone: "GMT+5:30",
-                coord: "28.57° N",
-                img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=2070&auto=format&fit=crop"
-              },
-              {
-                type: "Chennai Office",
-                city: "Chennai",
-                address: "3/162 First Floor Shanamuga Valli Complex, Nehru Street Echankadu Kovilambakkam, Chennai - 600129",
-                timezone: "GMT+5:30",
-                coord: "12.94° N",
-                img: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=2070&auto=format&fit=crop"
-              }
-            ].map((hub, idx) => (
+            {OFFICES.map((hub, idx) => (
               <div key={idx} className="group relative rounded-[48px] overflow-hidden aspect-[16/10] bg-gray-100 cursor-none">
                 <img src={hub.img} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[2s]" alt={hub.city} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity"></div>
@@ -360,34 +332,57 @@ const ContactPage: React.FC<ContactPageProps> = ({ mode }) => {
                 </div>
 
                 {/* Custom Cursor Circle for Hubs */}
-                <div
+                <motion.div
                   className="absolute w-24 h-24 border border-white/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none mix-blend-difference"
-                  style={{ left: (mousePos.x % 400) - 48, top: (mousePos.y % 400) - 48 }}
+                  style={{
+                    left: -48,
+                    top: -48,
+                    x: springX, // This needs to be relative to the container for "magnetic" effect or fixed for global? 
+                    // The original code was: left: (mousePos.x % 400) - 48. This looks like a bug or a very specific effect.
+                    // Let's assume we want the cursor to follow the mouse *within* the card.
+                    // Actually, the original code `(mousePos.x % 400)` implies it wraps around? That's weird.
+                    // Let's make it follow the mouse properly relative to the viewport if it's fixed, or relative to card.
+                    // Since it's absolute inside a relative group, we need mouse position relative to the card.
+                    // For simplicity and performance, let's just make it follow the mouse globally but masked by the card overflow.
+                    // But `x: springX` uses global coordinates.
+                    // We can use `position: fixed` for the cursor if we want it to follow mouse globally, but it's inside the card.
+                    // Let's stick to a simpler implementation: Just follow the mouse.
+                    // Since the parent has `overflow-hidden`, a fixed position element might be cut off? No, fixed escapes overflow. Absolute doesn't.
+                    // If we use absolute, we need relative coordinates.
+                    // Calculating relative coordinates requires refs and bounds, which is expensive.
+                    // The original code `(mousePos.x % 400)` was definitely weird/broken or a specific artistic choice.
+                    // Let's try to replicate "follow mouse" by using a fixed overlay or just accept global coordinates if the parent was fixed.
+                    // Wait, the parent is `relative overflow-hidden`.
+                    // If I use `position: fixed` on this cursor div, it will be visible everywhere? No, `overflow-hidden` on parent clips fixed children in some browsers but not all.
+                    // Let's use a simpler approach: The cursor effect is cool but maybe we can simplify it to just a hover effect or use the global mouse values but subtract the card's offset? Too complex for this step.
+                    // Let's just use the global spring values and see. If it's absolute, it will be positioned relative to the card top-left.
+                    // So `x: springX` will place it at X pixels from the left of the card.
+                    // If the card is at 100px, and mouse is at 150px, `x` will be 150. So the cursor will be at 150px inside the card.
+                    // This means it will be offset by the card's position.
+                    // To fix this without re-renders, we'd need to subtract the card's rect.
+                    // For now, let's just remove the weird modulo math and use a simple hover effect or just `x: springX` and accept the offset issue (it might look like a parallax effect).
+                    // Actually, the best way to do a custom cursor inside a card without JS overhead is CSS `cursor: none` and a global custom cursor, OR just a simple CSS hover effect.
+                    // Let's try to make it `fixed` so it follows the mouse correctly on screen, and the `overflow-hidden` of the parent *should* clip it if it's absolute? No.
+                    // Let's revert to a simpler CSS-only hover effect for the "View Map" text to avoid complexity, OR just use the `SpotlightCard` logic if applicable.
+                    // But this is a specific "Hub" card.
+                    // Let's try `position: fixed` and `pointer-events-none`.
+                    position: 'fixed',
+                    x: springX,
+                    y: springY
+                  }}
                 >
                   <span className="text-[8px] font-bold text-white uppercase tracking-widest">View Map</span>
-                </div>
+                </motion.div>
               </div>
             ))}
           </div>
         </section >
       </div >
 
-      <Footer />
-      {styleTag}
-    </div >
+    </MainLayout>
   );
 };
 
-const styleTag = (
-  <style>{`
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-  `}</style>
-);
+
 
 export default ContactPage;

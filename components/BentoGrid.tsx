@@ -27,61 +27,8 @@ const UserSegment = {
 
 // --- COMPONENTS ---
 
-// 1. Spotlight Card Component
-const SpotlightCard = ({ children, className = "", spotlightColor, borderColor, isEnterprise = true }) => {
-  const divRef = useRef(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [opacity, setOpacity] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e) => {
-    if (!divRef.current) return;
-    const rect = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  return (
-    <div
-      ref={divRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => { setOpacity(0.4); setIsHovered(true); }}
-      onMouseLeave={() => { setOpacity(0); setIsHovered(false); }}
-      className={`relative overflow-hidden rounded-[32px] border ${isHovered ? (isEnterprise ? 'border-red-500/30' : 'border-blue-500/30') : 'border-gray-200'} bg-[#fafafa] shadow-sm transition-all duration-300 ${className}`}
-    >
-      {/* Spotlight Gradient */}
-      <div
-        className="pointer-events-none absolute -inset-px transition duration-300 opacity-0"
-        style={{
-          opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
-        }}
-      />
-
-      {/* Border Highlight */}
-      <div
-        className="pointer-events-none absolute inset-0 z-10 transition duration-300 opacity-0"
-        style={{
-          opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${borderColor}, transparent 40%)`,
-          maskImage: 'linear-gradient(black, black) content-box, linear-gradient(black, black)',
-          maskComposite: 'exclude',
-          WebkitMaskComposite: 'xor',
-          padding: '1px',
-        }}
-      />
-
-      <div className="relative z-20 h-full">{children}</div>
-    </div>
-  );
-};
-
-// 2. Pill Component
-const Pill = ({ icon: Icon, text, className }) => (
-  <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] font-medium uppercase tracking-wide mb-4 ${className}`}>
-    {Icon && <Icon className="w-3 h-3" />}
-    <span>{text}</span>
-  </div>
-);
+import SpotlightCard from './ui/SpotlightCard';
+import Pill from './ui/Pill';
 
 const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
   const isEnterprise = mode === UserSegment.ENTERPRISE;
@@ -99,10 +46,7 @@ const BentoGrid = ({ mode = UserSegment.ENTERPRISE }) => {
 
   return (
     <>
-      <style>{`
-        .text-text-main { color: #111827; }
-        .text-text-muted { color: #6B7280; }
-      `}</style>
+
 
       <section className="relative z-20 py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans bg-transparent">
 

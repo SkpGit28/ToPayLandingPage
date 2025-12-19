@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Shield, Globe, Lightning as Zap, Heart } from '../components/Icons';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import { UserSegment } from '../types';
+import MainLayout from '../layouts/MainLayout';
 
 // --- SUB-COMPONENT: Hero Section with Mouse-Following Wordmark ---
 const Hero = () => {
@@ -355,15 +354,11 @@ const TeamSection = () => {
 // --- MAIN EXPORT ---
 export default function AboutUs() {
   return (
-    <div className="bg-white min-h-screen">
-      <Navbar mode={UserSegment.ENTERPRISE} />
-
+    <MainLayout mode={UserSegment.ENTERPRISE}>
       <Hero />
       <Values />
       <OurStory />
       <TeamSection />
-
-      <Footer />
-    </div>
+    </MainLayout>
   );
 }
