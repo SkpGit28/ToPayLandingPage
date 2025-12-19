@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Star } from 'lucide-react';
+import { Star } from './Icons';
 
 // Fallback Data
 const FALLBACK_REVIEWS = [
@@ -16,10 +16,10 @@ const FALLBACK_REVIEWS = [
 // --- HELPER: Google Style Avatar ---
 const GoogleAvatar = ({ name }) => {
   const colors = [
-    'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 
+    'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
     'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-teal-500'
   ];
-  
+
   // Deterministically pick a color based on the name string
   const charCode = name.charCodeAt(0) + (name.charCodeAt(1) || 0);
   const colorClass = colors[charCode % colors.length];
@@ -39,9 +39,9 @@ const ReviewCard = ({ name, rating, comment }) => {
         <div className="flex items-center gap-2 mb-4">
           <div className="flex gap-0.5">
             {[...Array(5)].map((_, i) => (
-              <Star 
-                key={i} 
-                className={`w-3.5 h-3.5 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}`} 
+              <Star
+                key={i}
+                className={`w-3.5 h-3.5 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}`}
               />
             ))}
           </div>
@@ -49,14 +49,14 @@ const ReviewCard = ({ name, rating, comment }) => {
         </div>
         <p className="text-gray-600 text-sm leading-relaxed mb-4">"{comment}"</p>
       </div>
-      
+
       <div className="flex items-center justify-between pt-4 border-t border-gray-50">
-         <div className="flex flex-col">
-           <p className="text-sm font-bold text-gray-900">{name}</p>
-           <p className="text-[10px] text-gray-400 font-medium">Verified User</p>
-         </div>
-         {/* Replaced DiceBear with Google Style Avatar for authenticity */}
-         <GoogleAvatar name={name} />
+        <div className="flex flex-col">
+          <p className="text-sm font-bold text-gray-900">{name}</p>
+          <p className="text-[10px] text-gray-400 font-medium">Verified User</p>
+        </div>
+        {/* Replaced DiceBear with Google Style Avatar for authenticity */}
+        <GoogleAvatar name={name} />
       </div>
     </div>
   );
@@ -85,7 +85,7 @@ export const Testimonials = () => {
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-50 to-transparent z-10 pointer-events-none" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full px-4">
-          
+
           {/* Column 1: Down */}
           <div className="hidden md:block overflow-hidden relative">
             <div className="animate-marquee-down hover:pause">

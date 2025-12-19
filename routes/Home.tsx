@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Metrics } from '../components/Metrics';
 import { Testimonials } from '../components/Testimonials';
 import Navbar from '../components/Navbar';
@@ -17,6 +18,11 @@ const Home: React.FC = () => {
 
   return (
     <div className="relative min-h-screen w-full bg-white overflow-x-hidden font-sans selection:bg-gray-100">
+      <Helmet>
+        <title>ToPay - Global Payments & Financial Solutions</title>
+        <meta name="description" content="One platform for everything payments. Streamline global transactions, taxation, HRM, and compliance with enterprise-grade security." />
+        <meta name="keywords" content="fintech, payments, global transactions, enterprise finance, consumer wallet" />
+      </Helmet>
 
       {/* Hero Section Container */}
       <div className="relative w-full">
@@ -50,7 +56,7 @@ const Home: React.FC = () => {
 
       {/* Main Page Content - Below Fold */}
       <main className="relative z-20 bg-white/50 backdrop-blur-3xl">
-      <Metrics mode="enterprise" />
+        <Metrics mode="enterprise" />
         <BentoGrid mode={mode} />
         <Testimonials />
         <HelpSection mode={mode} />
@@ -58,23 +64,6 @@ const Home: React.FC = () => {
       </main>
 
       <Footer />
-
-      {/* Styles for simple keyframe animation */}
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 };

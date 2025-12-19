@@ -21,7 +21,7 @@ const Counter = ({ value, suffix = "", label, isEnterpriseMode }) => {
   return (
     <div ref={ref} className="text-center space-y-2">
       <motion.div
-        className={`text-4xl md:text-5xl font-bold tracking-tight ${isEnterpriseMode ? "text-red-600" : "text-blue-600"
+        className={`text-4xl md:text-5xl font-bold tracking-tight ${isEnterpriseMode ? "text-brand-primary" : "text-brand-secondary"
           }`}
       >
         {displayValue}
@@ -32,6 +32,33 @@ const Counter = ({ value, suffix = "", label, isEnterpriseMode }) => {
     </div>
   );
 };
+
+const CERTIFICATIONS = [
+  {
+    id: 'rbi',
+    name: 'RBI',
+    role: 'Regulated Entity',
+    logo: '/assets/RBI.svg'
+  },
+  {
+    id: 'npci',
+    name: 'NPCI',
+    role: 'Strategic Partner',
+    logo: '/assets/npci.svg'
+  },
+  {
+    id: 'rupay',
+    name: 'RuPay',
+    role: 'Issuance Partner',
+    logo: '/assets/rupay.svg'
+  },
+  {
+    id: 'pci',
+    name: 'PCI-DSS',
+    role: 'Security L1',
+    logo: '/assets/pci.svg'
+  }
+];
 
 export const Metrics = ({ mode = 'enterprise' }) => {
   const isEnterprise = mode === 'enterprise';
@@ -45,49 +72,17 @@ export const Metrics = ({ mode = 'enterprise' }) => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-          {/* RBI */}
-          <div className="flex flex-col items-center text-center gap-4">
-            <div className="w-20 h-20 rounded-2xl bg-white shadow-sm flex items-center justify-center p-4">
-              <img src="/assets/RBI.svg" alt="RBI" className="w-full h-full object-contain" />
+          {CERTIFICATIONS.map((cert) => (
+            <div key={cert.id} className="flex flex-col items-center text-center gap-4">
+              <div className="w-20 h-20 rounded-2xl bg-white shadow-sm flex items-center justify-center p-4">
+                <img src={cert.logo} alt={cert.name} className="w-full h-full object-contain" />
+              </div>
+              <div>
+                <div className="font-bold text-gray-900 text-lg leading-none mb-1">{cert.name}</div>
+                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">{cert.role}</div>
+              </div>
             </div>
-            <div>
-              <div className="font-bold text-gray-900 text-lg leading-none mb-1">RBI</div>
-              <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Regulated Entity</div>
-            </div>
-          </div>
-
-          {/* NPCI */}
-          <div className="flex flex-col items-center text-center gap-4">
-            <div className="w-20 h-20 rounded-2xl bg-white shadow-sm flex items-center justify-center p-4">
-              <img src="/assets/npci.svg" alt="NPCI" className="w-full h-full object-contain" />
-            </div>
-            <div>
-              <div className="font-bold text-gray-900 text-lg leading-none mb-1">NPCI</div>
-              <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Strategic Partner</div>
-            </div>
-          </div>
-
-          {/* RuPay */}
-          <div className="flex flex-col items-center text-center gap-4">
-            <div className="w-20 h-20 rounded-2xl bg-white shadow-sm flex items-center justify-center p-4">
-              <img src="/assets/rupay.svg" alt="RuPay" className="w-full h-full object-contain" />
-            </div>
-            <div>
-              <div className="font-bold text-gray-900 text-lg leading-none mb-1">RuPay</div>
-              <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Issuance Partner</div>
-            </div>
-          </div>
-
-          {/* PCI-DSS */}
-          <div className="flex flex-col items-center text-center gap-4">
-            <div className="w-20 h-20 rounded-2xl bg-white shadow-sm flex items-center justify-center p-4">
-              <img src="/assets/pci.svg" alt="PCI-DSS" className="w-full h-full object-contain" />
-            </div>
-            <div>
-              <div className="font-bold text-gray-900 text-lg leading-none mb-1">PCI-DSS</div>
-              <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Security L1</div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 

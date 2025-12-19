@@ -4,20 +4,20 @@ import {
   Globe,
   Code,
   ShieldCheck,
-  Smartphone,
-  Zap,
-  LayoutGrid,
+  DeviceMobile as Smartphone,
+  Lightning as Zap,
+  SquaresFour as LayoutGrid,
   CreditCard,
   Terminal,
   Users,
   Activity,
   Wallet,
   Ticket,
-  ArrowRightLeft,
-  Landmark,
+  ArrowsLeftRight as ArrowRightLeft,
+  Bank as Landmark,
   PiggyBank,
   Gift
-} from 'lucide-react';
+} from './Icons';
 
 // --- MOCKS ---
 const UserSegment = {

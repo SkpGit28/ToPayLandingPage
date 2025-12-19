@@ -26,33 +26,33 @@ const MegaMenu: React.FC = () => {
 
   return (
     <div className="w-[900px] rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 overflow-hidden flex transition-all text-left">
-      
+
       {/* Left Sidebar */}
       <div className="w-1/3 bg-gray-50/50 border-r border-gray-100 p-6 flex flex-col">
         <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Select View</h3>
-        
+
         <div className="space-y-2">
-          <button 
+          <button
             onMouseEnter={() => setActiveTab('CONSUMER')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left
-              ${activeTab === 'CONSUMER' 
-                ? 'bg-brand-secondary/5 text-brand-secondary shadow-sm ring-1 ring-brand-secondary/20' 
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left group
+              ${activeTab === 'CONSUMER'
+                ? 'bg-brand-secondary/5 text-brand-secondary shadow-sm ring-1 ring-brand-secondary/20'
                 : 'text-text-muted hover:bg-gray-100'}`}
           >
-            <div className={`p-1.5 rounded-lg ${activeTab === 'CONSUMER' ? 'bg-white shadow-sm' : 'bg-transparent'}`}>
+            <div className={`p-1.5 rounded-lg transition-colors ${activeTab === 'CONSUMER' ? 'bg-white shadow-sm' : 'bg-transparent group-hover:bg-white/50'}`}>
               <User className="w-5 h-5" />
             </div>
             <span className="font-semibold text-sm">For Consumer</span>
           </button>
 
-          <button 
-             onMouseEnter={() => setActiveTab('BUSINESS')}
-             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left
-              ${activeTab === 'BUSINESS' 
-                ? 'bg-brand-primary/5 text-brand-primary shadow-sm ring-1 ring-brand-primary/20' 
+          <button
+            onMouseEnter={() => setActiveTab('BUSINESS')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left group
+              ${activeTab === 'BUSINESS'
+                ? 'bg-brand-primary/5 text-brand-primary shadow-sm ring-1 ring-brand-primary/20'
                 : 'text-text-muted hover:bg-gray-100'}`}
           >
-            <div className={`p-1.5 rounded-lg ${activeTab === 'BUSINESS' ? 'bg-white shadow-sm' : 'bg-transparent'}`}>
+            <div className={`p-1.5 rounded-lg transition-colors ${activeTab === 'BUSINESS' ? 'bg-white shadow-sm' : 'bg-transparent group-hover:bg-white/50'}`}>
               <Buildings className="w-5 h-5" />
             </div>
             <span className="font-semibold text-sm">For Business</span>
@@ -65,15 +65,15 @@ const MegaMenu: React.FC = () => {
         <h3 className="text-xl font-bold text-text-main mb-8">
           {activeTab === 'CONSUMER' ? 'Consumer Solutions' : 'Business Solutions'}
         </h3>
-        
+
         <div className="grid grid-cols-2 gap-x-8 gap-y-8">
           {currentItems.map((item, idx) => (
-            <div key={idx} className="flex items-start gap-4 group cursor-pointer">
+            <div key={idx} className="flex items-start gap-4 group cursor-pointer p-3 rounded-xl hover:bg-gray-50 transition-colors">
               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 ${item.bg} ${item.color}`}>
                 <item.icon className="w-6 h-6" />
               </div>
               <div>
-                <h4 className="font-bold text-text-main group-hover:text-brand-secondary transition-colors text-base">{item.title}</h4>
+                <h4 className={`font-bold text-text-main transition-colors text-base ${activeTab === 'BUSINESS' ? 'group-hover:text-brand-primary' : 'group-hover:text-brand-secondary'}`}>{item.title}</h4>
                 <p className="text-sm text-text-muted mt-1">{item.desc}</p>
               </div>
             </div>

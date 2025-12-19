@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserSegment } from '../types';
-import { LifeBuoy, BookOpen, ChatCircle, ArrowRight } from './Icons';
+import { Lifebuoy, BookOpen, ChatCircle, ArrowRight } from './Icons';
+
 
 interface HelpSectionProps {
   mode: UserSegment;
@@ -8,7 +9,7 @@ interface HelpSectionProps {
 
 const HelpSection: React.FC<HelpSectionProps> = ({ mode }) => {
   const isEnterprise = mode === UserSegment.ENTERPRISE;
-  
+
   const accentColor = isEnterprise ? 'text-brand-primary' : 'text-brand-secondary';
   const bgColor = isEnterprise ? 'bg-brand-primary' : 'bg-brand-secondary';
 
@@ -24,7 +25,7 @@ const HelpSection: React.FC<HelpSectionProps> = ({ mode }) => {
       desc: "Connect with other users and developers.",
     },
     {
-      icon: LifeBuoy,
+      icon: Lifebuoy,
       title: "24/7 Support",
       desc: "Get help from our expert team anytime.",
     },

@@ -6,9 +6,10 @@ interface CTAButtonProps {
   size?: 'small'| 'medium' | 'large';
   className?: string;
   customText?: string;
+  'aria-label'?: string;
 }
 
-const CTAButton: React.FC<CTAButtonProps> = ({ mode, size = 'small', className = '', customText }) => {
+const CTAButton: React.FC<CTAButtonProps> = ({ mode, size = 'small', className = '', customText, 'aria-label': ariaLabel }) => {
   const isEnterprise = mode === UserSegment.ENTERPRISE;
   
   const buttonText = customText || (isEnterprise ? 'Sign Up' : 'Download');
@@ -22,7 +23,8 @@ const CTAButton: React.FC<CTAButtonProps> = ({ mode, size = 'small', className =
   
   return (
     <button 
-      className={`${buttonColorClass} text-white rounded-full shadow-gray-200 transition-all transform active:translate-y-0 active:scale-95 ${sizeClasses} ${className}`}
+      className={`${buttonColorClass} text-white rounded-full transition-all transform active:translate-y-0 active:scale-95 ${sizeClasses} ${className}`}
+      aria-label={ariaLabel || buttonText}
     >
       {buttonText}
     </button>

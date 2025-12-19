@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Shield, Globe, Zap, Heart } from 'lucide-react';
+import { Shield, Globe, Lightning as Zap, Heart } from '../components/Icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { UserSegment } from '../types';
@@ -18,60 +18,60 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="pt-20"> 
-    <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden px-4">
-      {/* Mouse-following ToPay wordmark - LARGER */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden opacity-[0.03]"
-        style={{
-          transform: `translate(${(mousePos.x - (typeof window !== 'undefined' ? window.innerWidth : 0) / 2) * 0.03}px, ${(mousePos.y - (typeof window !== 'undefined' ? window.innerHeight : 0) / 2) * 0.03}px)`
-        }}
-      >
-        <span className="text-[35vw] font-display font-black leading-none">ToPay</span>
-      </div>
-
-      <div className="relative z-10 text-center max-w-5xl mx-auto">
-        {/* Pill Badge */}
-        <div className="flex justify-center mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="px-4 py-1.5 rounded-full bg-blue-50 text-brand-secondary text-[10px] font-bold tracking-[0.4em] uppercase border border-current opacity-70 font-display">
-              THE INFRASTRUCTURE OF TRUST
-            </div>
-          </motion.div>
+    <div className="pt-20">
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden px-4">
+        {/* Mouse-following ToPay wordmark - LARGER */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden opacity-[0.03]"
+          style={{
+            transform: `translate(${(mousePos.x - (typeof window !== 'undefined' ? window.innerWidth : 0) / 2) * 0.03}px, ${(mousePos.y - (typeof window !== 'undefined' ? window.innerHeight : 0) / 2) * 0.03}px)`
+          }}
+        >
+          <span className="text-[35vw] font-display font-black leading-none">ToPay</span>
         </div>
 
-        {/* Main Heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-6xl sm:text-8xl font-extrabold mb-8 leading-[0.9] font-display"
-        >
-          Engineering<br />the <span
-            className="italic bg-clip-text text-transparent
+        <div className="relative z-10 text-center max-w-5xl mx-auto">
+          {/* Pill Badge */}
+          <div className="flex justify-center mb-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="px-4 py-1.5 rounded-full bg-blue-50 text-brand-secondary text-[10px] font-bold tracking-[0.4em] uppercase border border-current opacity-70 font-display">
+                THE INFRASTRUCTURE OF TRUST
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Main Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-6xl sm:text-8xl font-extrabold mb-8 leading-[0.9] font-display"
+          >
+            Engineering<br />the <span
+              className="italic bg-clip-text text-transparent
   bg-[linear-gradient(90deg,theme(colors.brand.primary)_0%,theme(colors.brand.primary)_30%,theme(colors.brand.secondary)_60%,theme(colors.brand.secondary)_100%)]
 ">
-            impossible.
-          </span>
+              impossible.
+            </span>
 
-        </motion.h1>
+          </motion.h1>
 
-        {/* Body Text */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-lg md:text-xl text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto"
-        >
-          We've built the world's most sophisticated financial dual-core. One for global commerce, one for everyday life.
-        </motion.p>
-      </div>
-    </section>
-     </div> 
+          {/* Body Text */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-lg md:text-xl text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto"
+          >
+            We've built the world's most sophisticated financial dual-core. One for global commerce, one for everyday life.
+          </motion.p>
+        </div>
+      </section>
+    </div>
   );
 };
 
