@@ -88,7 +88,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, mode }) => {
             <div className="p-4 border-t border-gray-100">
                 <CTAButton mode={mode} size="large" className="w-full justify-center" />
                 <div className="mt-4 text-center">
-                    <a href="#" className="text-sm font-semibold text-text-main hover:opacity-70">Already have an account? Login</a>
+                    <a href="https://customer.topay.live/" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-text-main hover:opacity-70">Already have an account? Login</a>
                 </div>
             </div>
         </div>

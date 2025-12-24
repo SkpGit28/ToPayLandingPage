@@ -29,10 +29,10 @@ const Navbar: React.FC<NavbarProps> = ({ mode }) => {
   return (
     <>
       {/* Mobile Menu Overlay */}
-      <MobileMenu 
-        isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
-        mode={mode} 
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        mode={mode}
       />
 
       <nav className={`fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
@@ -100,7 +100,7 @@ const Navbar: React.FC<NavbarProps> = ({ mode }) => {
 
           {/* CTA Section */}
           <div className="flex items-center gap-6 relative z-50 w-[220px] justify-end ml-auto">
-            <a href="#" className="hidden sm:block text-sm font-semibold text-text-main hover:opacity-70">Login</a>
+            <a href="https://customer.topay.live/" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-sm font-semibold text-text-main hover:opacity-70">Login</a>
             <CTAButton mode={mode} size="small" className="flex" />
           </div>
         </div>
