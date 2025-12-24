@@ -115,26 +115,6 @@ export const Testimonials = () => {
         </div>
       </div>
 
-      {/* Animation Styles */}
-      <style>{`
-        @keyframes marquee-up {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-50%); }
-        }
-        @keyframes marquee-down {
-          0% { transform: translateY(-50%); }
-          100% { transform: translateY(0); }
-        }
-        .animate-marquee-up {
-          animation: marquee-up 60s linear infinite;
-        }
-        .animate-marquee-down {
-          animation: marquee-down 60s linear infinite;
-        }
-        .hover\\:pause:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </section>
   );
 };

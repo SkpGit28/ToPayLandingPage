@@ -53,7 +53,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, mode }) => {
                     <Link
                         to="/"
                         onClick={onClose}
-                        className={`text-lg font-medium ${isActive('/') ? 'text-brand-primary font-bold' : 'text-text-main'}`}
+                        className={`text-lg font-medium ${isActive('/') ? (mode === UserSegment.ENTERPRISE ? 'text-brand-primary font-bold' : 'text-brand-secondary font-bold') : 'text-text-main'}`}
                     >
                         Home
                     </Link>
@@ -61,16 +61,16 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, mode }) => {
                     <div className="space-y-3">
                         <div className="text-lg font-medium text-text-main">Our Solution</div>
                         <div className="pl-4 flex flex-col space-y-3 border-l-2 border-gray-100">
-                            <Link to="/contact" onClick={onClose} className="text-text-muted hover:text-brand-primary">ToPay Business Suite</Link>
-                            <Link to="/contact" onClick={onClose} className="text-text-muted hover:text-brand-primary">B2B API's</Link>
-                            <Link to="/contact" onClick={onClose} className="text-text-muted hover:text-brand-primary">ToPay Superapp</Link>
+                            <Link to="/contact" onClick={onClose} className={`text-text-muted ${mode === UserSegment.ENTERPRISE ? 'hover:text-brand-primary' : 'hover:text-brand-secondary'}`}>ToPay Business Suite</Link>
+                            <Link to="/contact" onClick={onClose} className={`text-text-muted ${mode === UserSegment.ENTERPRISE ? 'hover:text-brand-primary' : 'hover:text-brand-secondary'}`}>B2B API's</Link>
+                            <Link to="/contact" onClick={onClose} className={`text-text-muted ${mode === UserSegment.ENTERPRISE ? 'hover:text-brand-primary' : 'hover:text-brand-secondary'}`}>ToPay Superapp</Link>
                         </div>
                     </div>
 
                     <Link
                         to="/company"
                         onClick={onClose}
-                        className={`text-lg font-medium ${isActive('/company') ? 'text-brand-primary font-bold' : 'text-text-main'}`}
+                        className={`text-lg font-medium ${isActive('/company') ? (mode === UserSegment.ENTERPRISE ? 'text-brand-primary font-bold' : 'text-brand-secondary font-bold') : 'text-text-main'}`}
                     >
                         Company
                     </Link>
@@ -78,7 +78,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, mode }) => {
                     <Link
                         to="/contact"
                         onClick={onClose}
-                        className={`text-lg font-medium ${isActive('/contact') ? 'text-brand-primary font-bold' : 'text-text-main'}`}
+                        className={`text-lg font-medium ${isActive('/contact') ? (mode === UserSegment.ENTERPRISE ? 'text-brand-primary font-bold' : 'text-brand-secondary font-bold') : 'text-text-main'}`}
                     >
                         Contact Us
                     </Link>

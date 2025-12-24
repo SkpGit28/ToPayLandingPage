@@ -11,7 +11,14 @@ import { SquaresFour as LayoutGrid, DeviceMobile as Smartphone } from './Icons';
 
 interface BentoCardProps {
   item: BentoItem;
-  theme: any;
+  theme: {
+    spotlight: string;
+    borderColor: string;
+    gradient: string;
+    textPrimary: string;
+    bgLight: string;
+    primary: string;
+  };
   isEnterprise: boolean;
 }
 
@@ -28,7 +35,7 @@ const BentoCard: React.FC<BentoCardProps> = React.memo(({ item, theme, isEnterpr
         className={`h-full p-6 flex ${isWide ? 'flex-col sm:flex-row items-center gap-8' : 'flex-col justify-between'} overflow-hidden`}
       >
         {isLarge && (
-          <div className={`absolute top-0 right-0 w-96 h-96 rounded-full blur-[100px] opacity-[0.08] -mr-20 -mt-20 pointer-events-none ${theme.gradient}`}></div>
+          <div className={`absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 rounded-full blur-[60px] md:blur-[100px] opacity-[0.08] -mr-10 -mt-10 md:-mr-20 md:-mt-20 pointer-events-none ${theme.gradient}`}></div>
         )}
 
         <div className={`relative z-10 flex flex-col ${isWide ? 'flex-1' : 'h-full'} w-full`}>
@@ -52,7 +59,7 @@ const BentoCard: React.FC<BentoCardProps> = React.memo(({ item, theme, isEnterpr
 
           {item.visualType === 'grid' && (
             <div className="grid grid-cols-2 gap-2 mt-auto">
-              {item.visualData.map((v: { label: string; icon: React.ElementType }, idx: number) => (
+              {(item.visualData as { label: string; icon: React.ElementType }[]).map((v, idx) => (
                 <motion.div
                   key={idx}
                   whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 1)" }}

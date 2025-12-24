@@ -12,19 +12,19 @@ const Footer: React.FC = () => {
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center gap-2">
               <Link to="/" className="flex items-center gap-2 cursor-pointer group relative z-50">
-                            <img
-                              src="/assets/ToPayLogo.png"
-                              alt="ToPay Logo"
-                              className="w-16 h-16 object-contain"
-                            />
-                          </Link>
+                <img
+                  src="/assets/ToPayLogo.png"
+                  alt="ToPay Logo"
+                  className="w-16 h-16 object-contain"
+                />
+              </Link>
             </div>
             <p className="text-text-muted text-sm mb-6">
               Reimagining financial infrastructure for the modern world. Secure, fast, and reliable.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-text-muted hover:text-brand-primary transition-colors"><TwitterLogo className="w-5 h-5" /></a>
-              <a href="#" className="text-text-muted hover:text-brand-secondary transition-colors"><LinkedinLogo className="w-5 h-5" /></a>
+              <a href="https://twitter.com/topay" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-brand-primary transition-colors"><TwitterLogo className="w-5 h-5" /></a>
+              <a href="https://linkedin.com/company/topay" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-brand-secondary transition-colors"><LinkedinLogo className="w-5 h-5" /></a>
             </div>
           </div>
 

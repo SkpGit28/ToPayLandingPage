@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { UserSegment } from '../types';
 
 export interface SegmentOption {
   value: string;
@@ -37,7 +38,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
           let iconClass = 'text-text-muted';
 
           if (isActive) {
-            if (option.value === 'ENTERPRISE') {
+            if (option.value === UserSegment.ENTERPRISE) {
               activeClass = 'bg-brand-primary/10 text-brand-primary shadow-sm ring-1 ring-brand-primary/10';
               iconClass = 'text-brand-primary';
             } else {

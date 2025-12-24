@@ -31,13 +31,15 @@ export interface CertificationData {
   logo: string;
 }
 
+export type BentoVisualType = 'chart' | 'grid' | 'code' | 'list' | 'icon' | 'image';
+
 export interface BentoItem {
   id: string;
   title: string;
   description: string;
-  pillIcon: any;
+  pillIcon: React.ElementType;
   pillText: string;
   type: 'large' | 'small' | 'wide';
-  visualType: 'chart' | 'grid' | 'code' | 'list' | 'icon' | 'image';
-  visualData?: any;
+  visualType: BentoVisualType;
+  visualData?: any; // Still any for now as it varies wildly, but better than before
 }

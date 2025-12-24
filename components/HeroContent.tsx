@@ -91,7 +91,7 @@ const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
                     <path d="M6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z" className="fill-green-400" />
                   </svg>
                 </div>
-                <span className="text-text-main">{(currentContent.badges as any).label}</span>
+                <span className="text-text-main">{(currentContent.badges as { label: string; rating: string }).label}</span>
               </div>
             )}
           </div>

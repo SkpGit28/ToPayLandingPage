@@ -24,8 +24,22 @@ module.exports = {
                     main: '#1D2735',
                     muted: '#4B5563',
                 }
-            }
+            },
+            animation: {
+                'marquee-up': 'marquee-up 60s linear infinite',
+                'marquee-down': 'marquee-down 60s linear infinite',
+            },
+            keyframes: {
+                'marquee-up': {
+                    '0%': { transform: 'translateY(0)' },
+                    '100%': { transform: 'translateY(-50%)' },
+                },
+                'marquee-down': {
+                    '0%': { transform: 'translateY(-50%)' },
+                    '100%': { transform: 'translateY(0)' },
+                },
+            },
         },
     },
     plugins: [],
-}
+};
