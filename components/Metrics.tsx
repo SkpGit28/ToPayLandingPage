@@ -1,67 +1,10 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, useInView, useSpring, useMotionValue, useTransform } from 'framer-motion';
+import React from 'react';
+import Counter from './ui/Counter';
+import { METRICS_DATA, CERTIFICATIONS } from '../data/metrics';
+import { UserSegment } from '../types';
 
-// Helper Component for the animation
-const Counter = ({ value, suffix = "", label, isEnterpriseMode }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
-  const displayValue = useTransform(springValue, (latest) =>
-    `${Math.floor(latest).toLocaleString()}${suffix}`
-  );
-
-  useEffect(() => {
-    if (isInView) {
-      motionValue.set(value);
-    }
-  }, [isInView, value, motionValue]);
-
-  return (
-    <div ref={ref} className="text-center space-y-2">
-      <motion.div
-        className={`text-4xl md:text-5xl font-bold tracking-tight ${isEnterpriseMode ? "text-brand-primary" : "text-brand-secondary"
-          }`}
-      >
-        {displayValue}
-      </motion.div>
-      <div className="text-sm font-medium text-gray-500 uppercase tracking-wider">
-        {label}
-      </div>
-    </div>
-  );
-};
-
-const CERTIFICATIONS = [
-  {
-    id: 'rbi',
-    name: 'RBI',
-    role: 'Regulated Entity',
-    logo: '/assets/RBI.svg'
-  },
-  {
-    id: 'npci',
-    name: 'NPCI',
-    role: 'Strategic Partner',
-    logo: '/assets/npci.svg'
-  },
-  {
-    id: 'rupay',
-    name: 'RuPay',
-    role: 'Issuance Partner',
-    logo: '/assets/rupay.svg'
-  },
-  {
-    id: 'pci',
-    name: 'PCI-DSS',
-    role: 'Security L1',
-    logo: '/assets/pci.svg'
-  }
-];
-
-export const Metrics = ({ mode = 'enterprise' }) => {
-  const isEnterprise = mode === 'enterprise';
+export const Metrics = ({ mode = UserSegment.ENTERPRISE }: { mode?: UserSegment }) => {
+  const isEnterprise = mode === UserSegment.ENTERPRISE;
 
   return (
     <section className="py-20 bg-gray-50 border-y border-gray-200">
@@ -87,24 +30,15 @@ export const Metrics = ({ mode = 'enterprise' }) => {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
-        <Counter
-          value={1.2}
-          suffix=" Cr+"
-          label="Transactions Processed"
-          isEnterpriseMode={isEnterprise}
-        />
-        <Counter
-          value={80}
-          suffix=" Lakhs"
-          label="Successful Settlements"
-          isEnterpriseMode={isEnterprise}
-        />
-        <Counter
-          value={99.9}
-          suffix="%"
-          label="System Uptime"
-          isEnterpriseMode={isEnterprise}
-        />
+        {METRICS_DATA.map((metric, idx) => (
+          <Counter
+            key={idx}
+            value={metric.value}
+            suffix={metric.suffix}
+            label={metric.label}
+            isEnterpriseMode={isEnterprise}
+          />
+        ))}
       </div>
     </section>
   );

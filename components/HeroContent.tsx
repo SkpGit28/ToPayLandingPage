@@ -4,6 +4,7 @@ import { CheckCircle } from './Icons';
 import CTAButton from './CTAButton';
 import WaterflowText from './WaterflowText';
 import { motion } from 'framer-motion';
+import { HERO_CONTENT } from '../data/hero';
 
 interface HeroContentProps {
   mode: UserSegment;
@@ -11,24 +12,7 @@ interface HeroContentProps {
 
 const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
   const isEnterprise = mode === UserSegment.ENTERPRISE;
-
-  // Content configuration
-  const content = {
-    [UserSegment.ENTERPRISE]: {
-      heading: "One Platform for Everything Payments.",
-      body: "Streamline your global transactions with enterprise-grade security, automated compliance, and real-time reconciliation across all borders.",
-      buttonColor: "bg-brand-primary hover:bg-brand-primary/90",
-      badges: ["No credit card required", "14-day free trial"]
-    },
-    [UserSegment.CONSUMER]: {
-      heading: <p>One App, Total Control. <br /> Pay Bills</p>,
-      body: "Manage your personal finances, split bills with friends instantly, and track your daily spending habits effortlessly from your pocket.",
-      buttonColor: "bg-brand-secondary hover:bg-brand-secondary/90",
-      badges: ["Free forever plan", "No hidden fees"]
-    }
-  };
-
-  const currentContent = content[mode];
+  const currentContent = HERO_CONTENT[mode];
 
   return (
     <div className="relative z-30 flex flex-col items-center text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-20 sm:pt-4 sm:pb-24">
@@ -90,7 +74,7 @@ const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-sm text-text-muted font-medium mt-2">
             {isEnterprise ? (
               // Enterprise badges
-              currentContent.badges.map((badge, index) => (
+              (currentContent.badges as string[]).map((badge, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-brand-primary" />
                   <span>{badge}</span>
@@ -107,7 +91,7 @@ const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
                     <path d="M6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z" className="fill-green-400" />
                   </svg>
                 </div>
-                <span className="text-text-main">Rated 4.4 ★ on Google Play</span>
+                <span className="text-text-main">{(currentContent.badges as any).label}</span>
               </div>
             )}
           </div>
@@ -117,4 +101,4 @@ const HeroContent: React.FC<HeroContentProps> = ({ mode }) => {
   );
 };
 
-export default HeroContent;
+export default React.memo(HeroContent);

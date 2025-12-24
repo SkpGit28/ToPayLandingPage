@@ -335,40 +335,10 @@ const ContactPage: React.FC<ContactPageProps> = ({ mode }) => {
                 <motion.div
                   className="absolute w-24 h-24 border border-white/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none mix-blend-difference"
                   style={{
-                    left: -48,
-                    top: -48,
-                    x: springX, // This needs to be relative to the container for "magnetic" effect or fixed for global? 
-                    // The original code was: left: (mousePos.x % 400) - 48. This looks like a bug or a very specific effect.
-                    // Let's assume we want the cursor to follow the mouse *within* the card.
-                    // Actually, the original code `(mousePos.x % 400)` implies it wraps around? That's weird.
-                    // Let's make it follow the mouse properly relative to the viewport if it's fixed, or relative to card.
-                    // Since it's absolute inside a relative group, we need mouse position relative to the card.
-                    // For simplicity and performance, let's just make it follow the mouse globally but masked by the card overflow.
-                    // But `x: springX` uses global coordinates.
-                    // We can use `position: fixed` for the cursor if we want it to follow mouse globally, but it's inside the card.
-                    // Let's stick to a simpler implementation: Just follow the mouse.
-                    // Since the parent has `overflow-hidden`, a fixed position element might be cut off? No, fixed escapes overflow. Absolute doesn't.
-                    // If we use absolute, we need relative coordinates.
-                    // Calculating relative coordinates requires refs and bounds, which is expensive.
-                    // The original code `(mousePos.x % 400)` was definitely weird/broken or a specific artistic choice.
-                    // Let's try to replicate "follow mouse" by using a fixed overlay or just accept global coordinates if the parent was fixed.
-                    // Wait, the parent is `relative overflow-hidden`.
-                    // If I use `position: fixed` on this cursor div, it will be visible everywhere? No, `overflow-hidden` on parent clips fixed children in some browsers but not all.
-                    // Let's use a simpler approach: The cursor effect is cool but maybe we can simplify it to just a hover effect or use the global mouse values but subtract the card's offset? Too complex for this step.
-                    // Let's just use the global spring values and see. If it's absolute, it will be positioned relative to the card top-left.
-                    // So `x: springX` will place it at X pixels from the left of the card.
-                    // If the card is at 100px, and mouse is at 150px, `x` will be 150. So the cursor will be at 150px inside the card.
-                    // This means it will be offset by the card's position.
-                    // To fix this without re-renders, we'd need to subtract the card's rect.
-                    // For now, let's just remove the weird modulo math and use a simple hover effect or just `x: springX` and accept the offset issue (it might look like a parallax effect).
-                    // Actually, the best way to do a custom cursor inside a card without JS overhead is CSS `cursor: none` and a global custom cursor, OR just a simple CSS hover effect.
-                    // Let's try to make it `fixed` so it follows the mouse correctly on screen, and the `overflow-hidden` of the parent *should* clip it if it's absolute? No.
-                    // Let's revert to a simpler CSS-only hover effect for the "View Map" text to avoid complexity, OR just use the `SpotlightCard` logic if applicable.
-                    // But this is a specific "Hub" card.
-                    // Let's try `position: fixed` and `pointer-events-none`.
-                    position: 'fixed',
                     x: springX,
-                    y: springY
+                    y: springY,
+                    translateX: '-50%',
+                    translateY: '-50%'
                   }}
                 >
                   <span className="text-[8px] font-bold text-white uppercase tracking-widest">View Map</span>

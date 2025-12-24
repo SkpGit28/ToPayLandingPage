@@ -7,7 +7,7 @@ import HeroBackground from '../components/HeroBackground';
 import HeroContent from '../components/HeroContent';
 import SegmentedControl from '../components/SegmentedControl';
 import BentoGrid from '../components/BentoGrid';
-import HelpSection from '../components/HelpSection';
+import FAQSection from '../components/FAQSection';
 import PreFooter from '../components/PreFooter';
 import Footer from '../components/Footer';
 import { UserSegment } from '../types';
@@ -56,10 +56,10 @@ const Home: React.FC = () => {
 
       {/* Main Page Content - Below Fold */}
       <main className="relative z-20 bg-white/50 backdrop-blur-3xl">
-        <Metrics mode="enterprise" />
+        <Metrics mode={mode} />
         <BentoGrid mode={mode} />
         <Testimonials />
-        <HelpSection mode={mode} />
+        <FAQSection mode={mode} />
         <PreFooter mode={mode} />
       </main>
 

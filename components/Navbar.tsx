@@ -66,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ mode }) => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex gap-12 items-center absolute left-1/2 -translate-x-1/2">
-            <Link to="/" className={`text-sm font-medium transition-colors ${isActive('/') ? 'text-brand-primary font-bold' : 'text-text-main hover:text-brand-primary'}`}>Home</Link>
+            <Link to="/" className={`text-sm font-medium transition-colors ${isActive('/') ? (mode === UserSegment.ENTERPRISE ? 'text-brand-primary font-bold' : 'text-blue-600 font-bold') : 'text-text-main hover:opacity-70'}`}>Home</Link>
             {/* Mega Menu Trigger */}
             <div
               className="relative"
@@ -75,12 +75,12 @@ const Navbar: React.FC<NavbarProps> = ({ mode }) => {
             >
               <button
                 className={`flex items-center gap-1 text-sm font-medium transition-colors py-2 
-                  ${isMenuOpen ? 'text-brand-primary' : 'text-text-main hover:text-brand-primary'}`}
+                  ${isMenuOpen ? (mode === UserSegment.ENTERPRISE ? 'text-brand-primary' : 'text-blue-600') : 'text-text-main hover:opacity-70'}`}
               >
                 Our Solution
                 <CaretDown
                   className={`w-3 h-3 text-text-muted transition-transform duration-200 
-                    ${isMenuOpen ? 'rotate-180 text-brand-primary' : ''}`}
+                    ${isMenuOpen ? `rotate-180 ${mode === UserSegment.ENTERPRISE ? 'text-brand-primary' : 'text-blue-600'}` : ''}`}
                 />
               </button>
 
@@ -94,8 +94,8 @@ const Navbar: React.FC<NavbarProps> = ({ mode }) => {
               </div>
             </div>
 
-            <Link to="/company" className={`text-sm font-medium transition-colors ${isActive('/company') ? 'text-brand-primary font-bold' : 'text-text-main hover:text-brand-primary'}`}>Company</Link>
-            <Link to="/contact" className={`text-sm font-medium transition-colors ${isActive('/contact') ? 'text-brand-primary font-bold' : 'text-text-main hover:text-brand-primary'}`}>Contact Us</Link>
+            <Link to="/company" className={`text-sm font-medium transition-colors ${isActive('/company') ? (mode === UserSegment.ENTERPRISE ? 'text-brand-primary font-bold' : 'text-blue-600 font-bold') : 'text-text-main hover:opacity-70'}`}>Company</Link>
+            <Link to="/contact" className={`text-sm font-medium transition-colors ${isActive('/contact') ? (mode === UserSegment.ENTERPRISE ? 'text-brand-primary font-bold' : 'text-blue-600 font-bold') : 'text-text-main hover:opacity-70'}`}>Contact Us</Link>
           </div>
 
           {/* CTA Section */}
